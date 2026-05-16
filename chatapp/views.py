@@ -1,7 +1,7 @@
 from django.shortcuts import render
 
 import chatapp
-from .models import ChatRoom
+from .models import ChatMessage, ChatRoom
 
 # Create your views here.
 def index(request):
@@ -10,4 +10,5 @@ def index(request):
 
 def chatroom(request, slug):
     chatroom = ChatRoom.objects.get(slug=slug)
-    return render(request, 'chatapp/room.html', {'chatroom':chatroom})
+    messages = ChatMessage.objects.filter(room=chatroom)
+    return render(request, 'chatapp/room.html', {'chatroom':chatroom, 'messages':messages})
